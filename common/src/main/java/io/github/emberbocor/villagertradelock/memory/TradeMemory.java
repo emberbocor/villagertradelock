@@ -26,6 +26,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 public final class TradeMemory {
     private static final String NBT_KEY = VillagerTradeLock.MODID + ":trade_memory";
     private static final String DATA_VERSION_KEY = "data_version";
+    private static final int FIRST_DATA_VERSION = 4786;
     private static final String OFFERS_KEY = "offers";
 
     private final Map<Identifier, Entry> entries = new HashMap<>();
@@ -80,7 +81,8 @@ public final class TradeMemory {
                     continue;
                 }
                 CompoundTag saved = memory.getCompoundOrEmpty(key);
-                if (saved.getIntOr(DATA_VERSION_KEY, 0) != currentDataVersion()) {
+                int dataVersion = saved.getIntOr(DATA_VERSION_KEY, 0);
+                if (dataVersion < FIRST_DATA_VERSION || dataVersion > currentDataVersion()) {
                     VillagerTradeLock.LOGGER.debug("Discarding remembered trades of {} saved by another game version", key);
                     continue;
                 }
