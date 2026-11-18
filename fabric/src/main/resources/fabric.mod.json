@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "Villagers remember their trades per profession: a villager that loses its job and later takes the same profession again gets its old trades back. Only needed on the server.",
+  "authors": [
+    "emberbocor"
+  ],
+  "contact": {
+    "homepage": "https://github.com/emberbocor/villagertradelock",
+    "sources": "https://github.com/emberbocor/villagertradelock",
+    "issues": "https://github.com/emberbocor/villagertradelock/issues"
+  },
+  "license": "${mod_license}",
+  "environment": "*",
+  "mixins": [
+    "${mod_id}.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": "${fabric_loader_version_range}",
+    "minecraft": "${fabric_minecraft_version_range}",
+    "java": ">=21"
+  }
+}
