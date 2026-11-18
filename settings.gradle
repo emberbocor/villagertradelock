@@ -22,6 +22,5 @@ plugins {
 
 rootProject.name = 'villagertradelock'
 include('common')
-include('neoforge')
 include('fabric')
 include('forge')

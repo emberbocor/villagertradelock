@@ -30,12 +30,12 @@ public abstract class VillagerMixin implements TradeMemoryHolder {
 
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
     private void villagertradelock$saveTradeMemory(CompoundTag tag, CallbackInfo ci) {
-        villagertradelock$tradeMemory.save(((Villager) (Object) this).registryAccess(), tag);
+        villagertradelock$tradeMemory.save(tag);
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
     private void villagertradelock$loadTradeMemory(CompoundTag tag, CallbackInfo ci) {
-        villagertradelock$tradeMemory.load(((Villager) (Object) this).registryAccess(), tag);
+        villagertradelock$tradeMemory.load(tag);
     }
 
     @Inject(method = "setVillagerData", at = @At("HEAD"))

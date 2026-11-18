@@ -15,7 +15,7 @@ import net.minecraft.world.entity.npc.VillagerProfession;
 
 public final class TradePeekCompat {
     public static final String MODID = "villagertradepeek";
-    public static final String NBT_KEY = MODID + ":future_trades";
+    public static final String NBT_KEY = MODID + ":future_trades_1_20";
 
     @Nullable
     private static final Api API = Services.PLATFORM.isModLoaded(MODID) ? Api.find() : null;
@@ -34,7 +34,7 @@ public final class TradePeekCompat {
                 return null;
             }
             CompoundTag tag = new CompoundTag();
-            API.save().invoke(null, villager, trades.get(), tag);
+            API.save().invoke(null, trades.get(), tag);
             return tag.get(NBT_KEY);
         } catch (ReflectiveOperationException | RuntimeException e) {
             VillagerTradeLock.LOGGER.warn("Failed to remember the Villager Trade Peek future trades of {}", villager, e);
@@ -63,7 +63,7 @@ public final class TradePeekCompat {
                 Class<?> trades = Class.forName("io.github.emberbocor.villagertradepeek.trade.FutureTrades");
                 return new Api(
                         storage.getMethod("get", Villager.class),
-                        storage.getMethod("save", Entity.class, trades, CompoundTag.class),
+                        storage.getMethod("save", trades, CompoundTag.class),
                         storage.getMethod("load", Entity.class, CompoundTag.class),
                         trades.getMethod("profession"));
             } catch (ReflectiveOperationException | LinkageError e) {

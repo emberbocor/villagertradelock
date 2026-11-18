@@ -28,11 +28,11 @@ public abstract class ZombieVillagerMixin implements TradeMemoryHolder {
 
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
     private void villagertradelock$saveTradeMemory(CompoundTag tag, CallbackInfo ci) {
-        villagertradelock$tradeMemory.save(((ZombieVillager) (Object) this).registryAccess(), tag);
+        villagertradelock$tradeMemory.save(tag);
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
     private void villagertradelock$loadTradeMemory(CompoundTag tag, CallbackInfo ci) {
-        villagertradelock$tradeMemory.load(((ZombieVillager) (Object) this).registryAccess(), tag);
+        villagertradelock$tradeMemory.load(tag);
     }
 }
