@@ -26,17 +26,17 @@ There is no config file.
 - **Only villagers that have never traded.** In vanilla, a villager loses its profession only while it has no trading experience and is still a Novice. Once someone has traded with it, it keeps its profession and its trades for good, with or without this mod. So the mod only ever affects villagers that nobody has traded with yet.
 - **Unemployed villagers and nitwits.** They have no trades, so there is nothing to remember.
 - **Zombie villagers.** The memory moves to the zombie villager and back to the villager when it is cured, like the villager's own trades and reputation do.
-- **Existing worlds.** Villagers that already exist are covered as soon as the mod is installed. Their memory fills up the first time they lose a profession afterwards.
+- **Existing worlds.** Villagers that already exist are covered as soon as the mod is installed. Their memory fills up the first time they lose a profession afterwards. Memory saved by another Minecraft version is discarded safely when the world is opened, and fills up again the same way.
 
 ## Requirements
 
 | | NeoForge | Forge | Fabric |
 |---|---|---|---|
-| Minecraft | 1.21.1 | 1.21.1 | 1.21 or 1.21.1 |
-| Loader | NeoForge 21.1.1 or newer | Forge 52.0.0 or newer | Fabric Loader 0.15.10 or newer |
-| Jar | `villagertradelock-neoforge-1.21.1-<version>.jar` | `villagertradelock-forge-1.21.1-<version>.jar` | `villagertradelock-fabric-1.21-1.21.1-<version>.jar` |
+| Minecraft | 1.21.11 | 1.21.11 | 1.21.11 |
+| Loader | NeoForge 21.11.42 or newer | Forge 61.0.1 or newer | Fabric Loader 0.17.3 or newer |
+| Jar | `villagertradelock-neoforge-1.21.11-<version>.jar` | `villagertradelock-forge-1.21.11-<version>.jar` | `villagertradelock-fabric-1.21.11-<version>.jar` |
 
-On Minecraft 1.21.1, NeoForge and Forge are separate loaders that do not run each other's mods, so each has its own jar. Pick the jar that matches your server's loader.
+On Minecraft 1.21.11, NeoForge and Forge are separate loaders that do not run each other's mods, so each has its own jar. Pick the jar that matches your server's loader.
 
 The Fabric version does not need Fabric API.
 

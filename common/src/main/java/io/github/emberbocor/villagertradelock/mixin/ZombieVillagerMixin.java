@@ -8,8 +8,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import io.github.emberbocor.villagertradelock.memory.TradeMemory;
 import io.github.emberbocor.villagertradelock.memory.TradeMemoryHolder;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.entity.monster.ZombieVillager;
+import net.minecraft.world.entity.monster.zombie.ZombieVillager;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 @Mixin(ZombieVillager.class)
 public abstract class ZombieVillagerMixin implements TradeMemoryHolder {
@@ -27,12 +28,12 @@ public abstract class ZombieVillagerMixin implements TradeMemoryHolder {
     }
 
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
-    private void villagertradelock$saveTradeMemory(CompoundTag tag, CallbackInfo ci) {
-        villagertradelock$tradeMemory.save(((ZombieVillager) (Object) this).registryAccess(), tag);
+    private void villagertradelock$saveTradeMemory(ValueOutput output, CallbackInfo ci) {
+        villagertradelock$tradeMemory.save(((ZombieVillager) (Object) this).registryAccess(), output);
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
-    private void villagertradelock$loadTradeMemory(CompoundTag tag, CallbackInfo ci) {
-        villagertradelock$tradeMemory.load(((ZombieVillager) (Object) this).registryAccess(), tag);
+    private void villagertradelock$loadTradeMemory(ValueInput input, CallbackInfo ci) {
+        villagertradelock$tradeMemory.load(((ZombieVillager) (Object) this).registryAccess(), input);
     }
 }

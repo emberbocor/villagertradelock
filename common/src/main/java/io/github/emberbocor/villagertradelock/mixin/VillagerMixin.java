@@ -8,10 +8,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import io.github.emberbocor.villagertradelock.memory.TradeMemory;
 import io.github.emberbocor.villagertradelock.memory.TradeMemoryHolder;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.entity.npc.Villager;
-import net.minecraft.world.entity.npc.VillagerData;
-import net.minecraft.world.entity.npc.VillagerProfession;
+import net.minecraft.core.Holder;
+import net.minecraft.world.entity.npc.villager.Villager;
+import net.minecraft.world.entity.npc.villager.VillagerData;
+import net.minecraft.world.entity.npc.villager.VillagerProfession;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 @Mixin(Villager.class)
 public abstract class VillagerMixin implements TradeMemoryHolder {
@@ -29,20 +31,20 @@ public abstract class VillagerMixin implements TradeMemoryHolder {
     }
 
     @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
-    private void villagertradelock$saveTradeMemory(CompoundTag tag, CallbackInfo ci) {
-        villagertradelock$tradeMemory.save(((Villager) (Object) this).registryAccess(), tag);
+    private void villagertradelock$saveTradeMemory(ValueOutput output, CallbackInfo ci) {
+        villagertradelock$tradeMemory.save(((Villager) (Object) this).registryAccess(), output);
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
-    private void villagertradelock$loadTradeMemory(CompoundTag tag, CallbackInfo ci) {
-        villagertradelock$tradeMemory.load(((Villager) (Object) this).registryAccess(), tag);
+    private void villagertradelock$loadTradeMemory(ValueInput input, CallbackInfo ci) {
+        villagertradelock$tradeMemory.load(((Villager) (Object) this).registryAccess(), input);
     }
 
     @Inject(method = "setVillagerData", at = @At("HEAD"))
     private void villagertradelock$rememberTrades(VillagerData data, CallbackInfo ci) {
         Villager villager = (Villager) (Object) this;
-        VillagerProfession profession = villager.getVillagerData().getProfession();
-        if (profession != data.getProfession()) {
+        Holder<VillagerProfession> profession = villager.getVillagerData().profession();
+        if (!profession.equals(data.profession())) {
             villagertradelock$tradeMemory.remember(villager, profession, ((AbstractVillagerAccessor) villager).villagertradelock$getOffers());
         }
     }
@@ -50,8 +52,8 @@ public abstract class VillagerMixin implements TradeMemoryHolder {
     @Inject(method = "setVillagerData", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/syncher/SynchedEntityData;set(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V"))
     private void villagertradelock$restoreTrades(VillagerData data, CallbackInfo ci) {
         Villager villager = (Villager) (Object) this;
-        if (villager.getVillagerData().getProfession() != data.getProfession()) {
-            villagertradelock$tradeMemory.restore(villager, data.getProfession());
+        if (!villager.getVillagerData().profession().equals(data.profession())) {
+            villagertradelock$tradeMemory.restore(villager, data.profession());
         }
     }
 }
